@@ -41,14 +41,14 @@ public class jpHash {
 	public static void main(String[] args) throws IOException {
 
 		// Figure1
-		RadialHash hash1 = jpHash.getImageRadialHash("tmp/earth1.jpg");
+		RadialHash hash1 = jpHash.getImageRadialHash("airpods/airpods1.jpg");
 		String Hash1 = hash1.toString();
 
 		System.out.println("hash: " + hash1);
 		System.out.println("fingerPrint: " + hexToBinary(Hash1));
 		System.out.println("---------------------------------");
 
-		File file = new File("D:\\workspace2\\jphash\\tmp");
+		File file = new File("D:\\workspace2\\jphash\\airpods");
 		String[] filenames;
 
 		if (file.isDirectory()) {
@@ -59,7 +59,7 @@ public class jpHash {
 
 			{
 
-				RadialHash hash2 = jpHash.getImageRadialHash("tmp/" + filenames[i]);
+				RadialHash hash2 = jpHash.getImageRadialHash(file + "/" + filenames[i]);
 				String Hash2 = hash2.toString();
 				System.out.println(filenames[i]);
 				System.out.println("hash: " + hash2);
@@ -68,8 +68,8 @@ public class jpHash {
 				BigInteger i1 = new BigInteger(Hash1, 16);
 				BigInteger i2 = new BigInteger(Hash2, 16);
 				int distance = hammingDistance(i1, i2);
-				System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
 				System.out.println("Hamming Distance: " + distance);
+				System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
 				System.out.println("---------------------------------");
 
 			}
