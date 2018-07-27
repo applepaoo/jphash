@@ -43,26 +43,46 @@ public class jpHash {
 		// Figure1
 		RadialHash hash1 = jpHash.getImageRadialHash("tmp/earth1.jpg");
 		String Hash1 = hash1.toString();
+
 		System.out.println("jpHash_Goods1: " + hash1);
 		System.out.println("jpHash_Goods1_fingerPrint: " + hexToBinary(Hash1));
 
-		// Figure2
-		RadialHash hash2 = jpHash.getImageRadialHash("tmp/earth1_resized.jpg");
-		String Hash2 = hash2.toString();
-		System.out.println("jpHash_Goods2: " + hash2);
-		System.out.println("jpHash_Goods2_fingerPrint: " + hexToBinary(Hash2));
+		// // Figure2 RadialHash hash2 =
+		// jpHash.getImageRadialHash("tmp/earth1_resized.jpg");
+		// String Hash2 = hash2.toString();
+		// System.out.println("jpHash_Goods2: " + hash2);
+		// System.out.println("jpHash_Goods2_fingerPrint: " + hexToBinary(Hash2));
 
-		// 取距離
-		BigInteger i = new BigInteger(Hash1, 16);
-		BigInteger i2 = new BigInteger(Hash2, 16);
+		File file = new File("D:\\workspace2\\jphash\\tmp");
+		String[] filenames;
 
-		int distance = hammingDistance(i, i2);
+		if (file.isDirectory()) {
 
-		System.out.println("jpHash_Similarity: " + jpHash.getSimilarity(hash1, hash2));
-		System.out.println("Hamming Distance: " + distance);
+			filenames = file.list();
 
-		String test = hash2.toString();
-		System.out.println(test.length());
+			for (int i = 0; i < filenames.length; i++)
+
+			{
+
+				for (String in : filenames) {
+
+					RadialHash hash3 = jpHash.getImageRadialHash("tmp/" + filenames[i]);
+					String Hash3 = hash3.toString();
+					System.out.println(filenames[i]);
+					System.out.println("jpHash_Goods2: " + hash3);
+					System.out.println("jpHash_Goods2_fingerPrint: " + hexToBinary(Hash3));
+
+					BigInteger i1 = new BigInteger(Hash1, 16);
+					BigInteger i2 = new BigInteger(Hash3, 16);
+					int distance = hammingDistance(i1, i2);
+					System.out.println("jpHash_Similarity: " + jpHash.getSimilarity(hash1, hash3));
+					System.out.println("Hamming Distance: " + distance);
+					break;
+				}
+
+			}
+
+		}
 
 	}
 
