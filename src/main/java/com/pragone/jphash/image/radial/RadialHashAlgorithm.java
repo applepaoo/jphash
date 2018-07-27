@@ -59,7 +59,7 @@ public class RadialHashAlgorithm {
 
     private static RadialHash calculateHash(Features features) {
         int N = features.getNumberOfProjections();
-        int nb_coeffs = 40;
+        int nb_coeffs = 32;
 
         RadialHash digest = new RadialHash(nb_coeffs);
 
