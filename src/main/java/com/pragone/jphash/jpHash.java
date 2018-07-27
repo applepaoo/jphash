@@ -44,8 +44,9 @@ public class jpHash {
 		RadialHash hash1 = jpHash.getImageRadialHash("tmp/earth1.jpg");
 		String Hash1 = hash1.toString();
 
-		System.out.println("jpHash_Goods1: " + hash1);
-		System.out.println("jpHash_Goods1_fingerPrint: " + hexToBinary(Hash1));
+		System.out.println("hash: " + hash1);
+		System.out.println("fingerPrint: " + hexToBinary(Hash1));
+		System.out.println("---------------------------------");
 
 		File file = new File("D:\\workspace2\\jphash\\tmp");
 		String[] filenames;
@@ -58,17 +59,18 @@ public class jpHash {
 
 			{
 
-				RadialHash hash3 = jpHash.getImageRadialHash("tmp/" + filenames[i]);
-				String Hash3 = hash3.toString();
+				RadialHash hash2 = jpHash.getImageRadialHash("tmp/" + filenames[i]);
+				String Hash2 = hash2.toString();
 				System.out.println(filenames[i]);
-				System.out.println("jpHash_Goods2: " + hash3);
-				System.out.println("jpHash_Goods2_fingerPrint: " + hexToBinary(Hash3));
+				System.out.println("hash: " + hash2);
+				System.out.println("fingerPrint: " + hexToBinary(Hash2));
 
 				BigInteger i1 = new BigInteger(Hash1, 16);
-				BigInteger i2 = new BigInteger(Hash3, 16);
+				BigInteger i2 = new BigInteger(Hash2, 16);
 				int distance = hammingDistance(i1, i2);
-				System.out.println("jpHash_Similarity: " + jpHash.getSimilarity(hash1, hash3));
+				System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
 				System.out.println("Hamming Distance: " + distance);
+				System.out.println("---------------------------------");
 
 			}
 
