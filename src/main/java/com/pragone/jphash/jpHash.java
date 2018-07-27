@@ -70,7 +70,7 @@ public class jpHash {
 				int distance = hammingDistance(i1, i2);
 				System.out.println("Hamming Distance: " + distance);
 				System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
-				System.out.println("---------------------------------");
+				System.out.println("--------------------------------");
 
 			}
 
