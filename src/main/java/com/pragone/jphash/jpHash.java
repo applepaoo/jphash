@@ -15,7 +15,8 @@ import java.util.*;
 import tw.com.ruten.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 /**
@@ -65,6 +66,23 @@ public class jpHash {
 		// System.out.println("fingerPrint: " + hexToBinary(Hash1));
 		// System.out.println("---------------------------------");
 
+		// 讀json算path
+		String testJson = "{\"USER_NICK\":\"chiefchain888\",\"G_STORAGE\":\"s1\",\"G_NO\":\"11091109716185\",\"G_IMG\":\"11091109716185_743.jpg\"}";
+		JSONParser parser = new JSONParser();
+		try {
+			Object obj = parser.parse(testJson);
+			JSONObject jsonObject = (JSONObject) obj;
+			// System.out.println(jsonObject.get("USER_NICK"));
+			String imagePath = ImageUtility.getImgPath(jsonObject.get("G_NO").toString(),
+					jsonObject.get("USER_NICK").toString(), jsonObject.get("G_STORAGE").toString())
+					+ jsonObject.get("G_NO").toString() + ".jpg";
+			System.out.println(imagePath);
+
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+
 		// FigureN
 		File file = new File("D:\\workspace2\\jphash\\airpods");
 		String[] filenames;
@@ -94,7 +112,6 @@ public class jpHash {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); // 格式化時間
 				Date current = new Date();
-				// System.out.println(sdf.format(current));
 
 				JSONObject obj = new JSONObject();
 
@@ -109,10 +126,6 @@ public class jpHash {
 			}
 
 			System.out.println(dataList);
-			String gno = "21816917535659";
-			String userNick = "nvvfxc36452";
-			String gStorage = "s3";
-			System.out.println(ImageUtility.getImgPath(gno, userNick, gStorage));
 
 		}
 
