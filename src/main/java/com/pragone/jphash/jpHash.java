@@ -12,7 +12,7 @@ import java.math.BigInteger;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+import tw.com.ruten.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -109,6 +109,10 @@ public class jpHash {
 			}
 
 			System.out.println(dataList);
+			String gno = "21816917535659";
+			String userNick = "nvvfxc36452";
+			String gStorage = "s3";
+			System.out.println(ImageUtility.getImgPath(gno, userNick, gStorage));
 
 		}
 
