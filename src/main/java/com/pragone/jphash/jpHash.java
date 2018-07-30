@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import org.json.simple.JSONObject;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
@@ -38,6 +41,17 @@ public class jpHash {
 		return RadialHashAlgorithm.getSimilarity(hash1, hash2);
 	}
 
+	public static String hexToBinary(String hexnumber) {
+		BigInteger temp = new BigInteger(hexnumber, 16);
+		return temp.toString(2);
+
+	}
+
+	// hammingDiatance
+	public static int hammingDistance(BigInteger i, BigInteger i2) {
+		return i.xor(i2).bitCount();
+	}
+
 	public static void main(String[] args) throws IOException {
 
 		// Figure1
@@ -48,6 +62,7 @@ public class jpHash {
 		System.out.println("fingerPrint: " + hexToBinary(Hash1));
 		System.out.println("---------------------------------");
 
+		// FigureN
 		File file = new File("D:\\workspace2\\jphash\\airpods");
 		String[] filenames;
 
@@ -68,8 +83,18 @@ public class jpHash {
 				BigInteger i1 = new BigInteger(Hash1, 16);
 				BigInteger i2 = new BigInteger(Hash2, 16);
 				int distance = hammingDistance(i1, i2);
-				System.out.println("Hamming Distance: " + distance);
-				System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
+				// System.out.println("Hamming Distance: " + distance);
+				// System.out.println("Similarity: " + jpHash.getSimilarity(hash1, hash2));
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); // 格式化時間
+				Date current = new Date();
+				System.out.println(sdf.format(current));
+
+				JSONObject obj = new JSONObject();
+				obj.put("G_NO", filenames[i]);
+				obj.put("G_FINGERPRINT", hexToBinary(Hash2));
+				obj.put("_SOURCE_TIME", sdf.format(current));
+				System.out.println(obj);
 				System.out.println("--------------------------------");
 
 			}
@@ -78,14 +103,4 @@ public class jpHash {
 
 	}
 
-	public static String hexToBinary(String hexnumber) {
-		BigInteger temp = new BigInteger(hexnumber, 16);
-		return temp.toString(2);
-
-	}
-
-	// hammingDiatance
-	public static int hammingDistance(BigInteger i, BigInteger i2) {
-		return i.xor(i2).bitCount();
-	}
 }
