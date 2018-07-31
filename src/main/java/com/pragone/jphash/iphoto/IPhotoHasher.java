@@ -1,12 +1,12 @@
 package com.pragone.jphash.iphoto;
 
-import com.pragone.jphash.image.radial.RadialHash;
-import com.pragone.jphash.image.radial.RadialHashAlgorithm;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import com.pragone.jphash.image.radial.RadialHash;
+import com.pragone.jphash.image.radial.RadialHashAlgorithm;
 
 /**
  * Created with IntelliJ IDEA.

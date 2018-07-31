@@ -1,9 +1,9 @@
 package com.pragone.jphash.image;
 
-import sun.misc.Unsafe;
-
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
+
+import sun.misc.Unsafe;
 
 public class UnsafeSimpleGrayscaleImage {
     private static final int BYTE_SIZE = 8;

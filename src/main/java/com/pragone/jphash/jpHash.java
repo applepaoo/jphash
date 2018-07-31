@@ -1,23 +1,22 @@
 package com.pragone.jphash;
 
-import com.pragone.jphash.image.radial.RadialHash;
-import com.pragone.jphash.image.radial.RadialHashAlgorithm;
-import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
-import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import tw.com.ruten.util.*;
-import org.json.simple.JSONArray;
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.omg.CORBA.PUBLIC_MEMBER;
+
+import com.pragone.jphash.image.radial.RadialHash;
+import com.pragone.jphash.image.radial.RadialHashAlgorithm;
+
+import tw.com.ruten.util.ImageUtility;
 
 /**
  * User: pragone Date: 27/04/2014 Time: 5:34 PM
@@ -116,7 +115,8 @@ public class jpHash {
 				JSONObject obj = new JSONObject();
 
 				obj.put("G_NO", filenames[i]);
-				obj.put("G_FINGERPRINT", hexToBinary(Hash2));
+				// obj.put("G_FINGERPRINT", hexToBinary(Hash2));
+				obj.put("G_HASH", Hash2);
 				obj.put("_SOURCE_TIME", sdf.format(current));
 				dataList.add(i, obj);
 

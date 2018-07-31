@@ -1,11 +1,11 @@
 package com.pragone.jphash.pruningconetree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pragone.jphash.index.DoubleVector;
 import com.pragone.jphash.index.Query;
 import com.pragone.jphash.index.QueryStats;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,14 +1,14 @@
 package com.pragone.jphash.image.radial;
 
-import com.pragone.jphash.image.SimpleGrayscaleImage;
-import com.pragone.jphash.image.UnsafeSimpleGrayscaleImage;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+import com.pragone.jphash.image.SimpleGrayscaleImage;
 
 /**
  * User: pragone

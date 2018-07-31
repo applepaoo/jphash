@@ -1,17 +1,12 @@
 package com.pragone.jphash.image;
 
 
-import sun.misc.Cleaner;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class SimpleGrayscaleImage {
     private static final int BYTE_SIZE = 8;

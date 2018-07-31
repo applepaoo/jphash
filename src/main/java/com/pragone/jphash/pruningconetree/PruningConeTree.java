@@ -1,13 +1,18 @@
 package com.pragone.jphash.pruningconetree;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import com.pragone.jphash.index.DoubleVector;
 import com.pragone.jphash.index.Query;
 import com.pragone.jphash.index.SearchIndex;
 import com.pragone.jphash.index.Vector;
-
-import java.util.*;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created with IntelliJ IDEA.
