@@ -88,17 +88,16 @@ public class fingerPrintPro {
 				String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
 						String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
 						+ String.valueOf(jsonObject.get("G_IMG"));
+				File file2 = new File("/mnt/" + imagePath);
 
-				if (imagePath.contains("null") || imagePath.contains(",")) {// 過濾imagePath有null or 多張圖(,)
+				if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
+						|| imagePath.contains("png") || imagePath.contains("bmp")) {// 過濾imagePath有null or 多張圖(,)
 
-				} else {
-					File file2 = new File(imagePath);
-					if (file2.exists() && !file2.isDirectory()) {
-						System.out.println(imagePath);
-						// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-						// String Hash2 = String.valueOf(hash2);
-						// System.out.println(Hash2);
-					}
+				} else if (file2.exists() && !file2.isDirectory()) {
+					// System.out.println(file2);
+					RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
+					String Hash2 = String.valueOf(hash2);
+					System.out.println(Hash2);
 
 				}
 
