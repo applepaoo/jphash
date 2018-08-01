@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -66,6 +68,10 @@ public class fingerPrint {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 
+		// File file3 = new File("tmp/11090920312176_249_s.jpg");
+		// BufferedImage test = ImageIO.read(file3);
+		// System.out.println(test.getType());
+
 		try {
 			File file = new File("tmp/test.txt"); // 讀取測試檔
 			FileReader fileReader = new FileReader(file);
@@ -80,25 +86,38 @@ public class fingerPrint {
 
 			String[] arrayBF = stringBuffer.toString().split("}");// 切割字串
 			JSONParser parser = new JSONParser();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
+			Date current = new Date();
 
 			for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
+
 				Object obj = parser.parse(arrayBF[i] + "}");
 				JSONObject jsonObject = (JSONObject) obj;
+				JSONObject jsonObject1 = new JSONObject();
 
-				String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
-						String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
-						+ String.valueOf(jsonObject.get("G_IMG"));
-				File file2 = new File("/mnt/" + imagePath);
-
-				if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
-						|| imagePath.contains("png") || imagePath.contains("JPG")) {// 過濾imagePath有null or 多張圖(,)
+				if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) {
 
 				} else {
-					System.out.println(file2);
-					// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-					// String Hash2 = String.valueOf(hash2);
-					// System.out.println(Hash2);
+					String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
+							String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
+							+ String.valueOf(jsonObject.get("G_IMG")).substring(0,
+									jsonObject.get("G_IMG").toString().length() - 4)
+							+ "_s.jpg";
+					File file2 = new File("/mnt/" + imagePath);
+					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
+							|| imagePath.contains("png") || imagePath.contains("bmp") || imagePath.contains("jpeg")) {
 
+					} else {
+						System.out.println(file2);
+						jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
+						jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
+						jsonObject1.put("G_FINGERPRINT", file2.toString());
+						// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
+						// String Hash2 = String.valueOf(hash2);
+						// System.out.println(Hash2);
+						// System.out.println(jsonObject1);
+
+					}
 				}
 
 			}

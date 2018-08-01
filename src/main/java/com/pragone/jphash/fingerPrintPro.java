@@ -85,20 +85,29 @@ public class fingerPrintPro {
 				Object obj = parser.parse(arrayBF[i] + "}");
 				JSONObject jsonObject = (JSONObject) obj;
 
-				String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
-						String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
-						+ String.valueOf(jsonObject.get("G_IMG"));
-				File file2 = new File("/mnt/" + imagePath);
+				if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) {
 
-				if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
-						|| imagePath.contains("png") || imagePath.contains("bmp")) {// 過濾imagePath有null or 多張圖(,)
+				} else {
 
-				} else if (file2.exists() && !file2.isDirectory()) {
-					// System.out.println(file2);
-					RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-					String Hash2 = String.valueOf(hash2);
-					System.out.println(Hash2);
+					String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
+							String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
+							+ String.valueOf(jsonObject.get("G_IMG")).substring(0,
+									jsonObject.get("G_IMG").toString().length() - 4)
+							+ "_s.jpg";
+					File file2 = new File("/mnt/" + imagePath);
 
+					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
+							|| imagePath.contains("png") || imagePath.contains("bmp") || imagePath.contains("jpeg")) {// 過濾imagePath有null
+																														// or
+																														// 多張圖(,)
+
+					} else if (file2.exists() && !file2.isDirectory()) {
+						System.out.println(String.valueOf(file2));
+						RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
+						String Hash2 = String.valueOf(hash2);
+						System.out.println(Hash2);
+
+					}
 				}
 
 			}
