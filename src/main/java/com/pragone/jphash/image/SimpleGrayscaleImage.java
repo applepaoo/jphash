@@ -209,9 +209,10 @@ public class SimpleGrayscaleImage {
                     }
                     this.data.put(j++,(byte) y);
                 }
-            } else {
-                throw new IllegalArgumentException("Can't work with this type of byte image: " + image.getType());
-            }
+            } 
+//            else {
+//                throw new IllegalArgumentException("Can't work with this type of byte image: " + image.getType());
+//            }
         } else {
             throw new IllegalArgumentException("Can't work with non-byte image buffers");
         }

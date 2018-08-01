@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -68,9 +69,9 @@ public class fingerPrint {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 
-		// File file3 = new File("tmp/11090920312176_249_s.jpg");
-		// BufferedImage test = ImageIO.read(file3);
-		// System.out.println(test.getType());
+		 File file3 = new File("tmp/21201175842148_217_ss.jpg");
+		 BufferedImage test = ImageIO.read(file3);
+		 System.out.println(test.getType());
 
 		try {
 			File file = new File("tmp/test.txt"); // 讀取測試檔
@@ -88,6 +89,7 @@ public class fingerPrint {
 			JSONParser parser = new JSONParser();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
 			Date current = new Date();
+			FileWriter fw = new FileWriter("tmp/output");
 
 			for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
 
@@ -104,23 +106,26 @@ public class fingerPrint {
 									jsonObject.get("G_IMG").toString().length() - 4)
 							+ "_s.jpg";
 					File file2 = new File("/mnt/" + imagePath);
-					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")
-							|| imagePath.contains("png") || imagePath.contains("bmp") || imagePath.contains("jpeg")) {
+					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
 
 					} else {
-						System.out.println(file2);
-						jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
+						//System.out.println(file2);
 						jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
-						jsonObject1.put("G_FINGERPRINT", file2.toString());
+						jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
+						jsonObject1.put("HASH_IMG", String.valueOf(jsonObject.get("G_IMG")).substring(0,
+								jsonObject.get("G_IMG").toString().length() - 4) + "_s.jpg");
+						jsonObject1.put("IMG_HASH_V1", "tt");
 						// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
 						// String Hash2 = String.valueOf(hash2);
 						// System.out.println(Hash2);
+						// fw.write(jsonObject1.toString()+"\r\n");
 						// System.out.println(jsonObject1);
 
 					}
 				}
 
 			}
+			fw.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
