@@ -95,9 +95,9 @@ public class fingerPrintPro {
 					File file2 = new File(imagePath);
 					if (file2.exists() && !file2.isDirectory()) {
 						System.out.println(imagePath);
-//						RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-//						String Hash2 = String.valueOf(hash2);
-//						System.out.println(Hash2);
+						// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
+						// String Hash2 = String.valueOf(hash2);
+						// System.out.println(Hash2);
 					}
 
 				}
@@ -107,40 +107,6 @@ public class fingerPrintPro {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// FigureN
-		// File file = new File("D:\\workspace2\\jphash\\airpods");
-		// String[] filenames;
-		//
-		// if (file.isDirectory()) {
-		//
-		// filenames = file.list();
-		// ArrayList dataList = new ArrayList();
-		//
-		// for (int i = 0; i < filenames.length; i++)
-		//
-		// {
-		//
-		// RadialHash hash2 = jpHash.getImageRadialHash(file + "/" + filenames[i]);
-		// String Hash2 = hash2.toString();// 算出的Fingerprint
-		//
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
-		// 格式化時間
-		// Date current = new Date();
-		//
-		// JSONObject obj = new JSONObject();
-		//
-		// obj.put("G_NO", filenames[i]);
-		// // obj.put("G_FINGERPRINT", hexToBinary(Hash2));
-		// obj.put("G_HASH", Hash2);
-		// obj.put("_SOURCE_TIME", sdf.format(current));
-		// dataList.add(i, obj);
-		//
-		// }
-		//
-		// System.out.println(dataList);
-		//
-		// }
 
 	}
 
