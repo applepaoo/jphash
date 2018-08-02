@@ -7,45 +7,18 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
-
-import javax.imageio.ImageIO;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.jcraft.jsch.Logger;
 import com.pragone.jphash.image.radial.RadialHash;
 import com.pragone.jphash.image.radial.RadialHashAlgorithm;
-import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
-import com.sun.org.apache.xpath.internal.operations.Equals;
-import com.sun.xml.internal.ws.db.glassfish.BridgeWrapper;
-
-import sun.print.resources.serviceui;
 import tw.com.ruten.util.ImageUtility;
 
-import org.apache.commons.collections.map.StaticBucketMap;
-import org.apache.hadoop.*;
-import org.apache.hadoop.classification.InterfaceAudience.Public;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.LocatedFileStatus;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.RemoteIterator;
-import org.apache.hadoop.io.IOUtils;
-import org.apache.log4j.spi.LoggerFactory;
-
-public class fingerPrint {
+public class jphashTest {
 
 	public static RadialHash getImageRadialHash(String path) throws IOException {
 		return RadialHashAlgorithm.getHash(path);
@@ -69,9 +42,9 @@ public class fingerPrint {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 
-		 File file3 = new File("tmp/21201175842148_217_ss.jpg");
-		 BufferedImage test = ImageIO.read(file3);
-		 System.out.println(test.getType());
+		// File file3 = new File("tmp/21306287664252_485_s.jpg");
+		// BufferedImage test = ImageIO.read(file3);
+		// test.getColorModel();
 
 		try {
 			File file = new File("tmp/test.txt"); // 讀取測試檔
@@ -88,7 +61,6 @@ public class fingerPrint {
 			String[] arrayBF = stringBuffer.toString().split("}");// 切割字串
 			JSONParser parser = new JSONParser();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
-			Date current = new Date();
 			FileWriter fw = new FileWriter("tmp/output");
 
 			for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
@@ -109,7 +81,8 @@ public class fingerPrint {
 					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
 
 					} else {
-						//System.out.println(file2);
+						Date current = new Date();
+						// System.out.println(file2);
 						jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
 						jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
 						jsonObject1.put("HASH_IMG", String.valueOf(jsonObject.get("G_IMG")).substring(0,
@@ -119,8 +92,8 @@ public class fingerPrint {
 						// String Hash2 = String.valueOf(hash2);
 						// System.out.println(Hash2);
 						// fw.write(jsonObject1.toString()+"\r\n");
-						// System.out.println(jsonObject1);
-
+						 System.out.println(jsonObject1);
+						
 					}
 				}
 
