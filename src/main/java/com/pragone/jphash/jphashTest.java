@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -42,67 +45,78 @@ public class jphashTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 
-		// File file3 = new File("tmp/21306287664252_485_s.jpg");
-		// BufferedImage test = ImageIO.read(file3);
-		// test.getColorModel();
-
 		try {
-			File file = new File("tmp/test.txt"); // 讀取測試檔
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			StringBuffer stringBuffer = new StringBuffer();
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				stringBuffer.append(line);
-				stringBuffer.append("\n");
-			}
-			fileReader.close();
+			
+			 File file3 = new File("tmp/21306287664252_485_s.jpg");
+			 BufferedImage test = ImageIO.read(file3);
+			
+		} catch (Exception e) {
 
-			String[] arrayBF = stringBuffer.toString().split("}");// 切割字串
-			JSONParser parser = new JSONParser();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
-			FileWriter fw = new FileWriter("tmp/output");
+		}finally {
+			
+			try {
+				File file = new File("tmp/test.txt"); // 讀取測試檔
+				FileReader fileReader = new FileReader(file);
+				BufferedReader bufferedReader = new BufferedReader(fileReader);
+				StringBuffer stringBuffer = new StringBuffer();
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+					stringBuffer.append(line);
+					stringBuffer.append("\n");
+				}
+				fileReader.close();
 
-			for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
+				String[] arrayBF = stringBuffer.toString().split("}");// 切割字串
+				JSONParser parser = new JSONParser();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'"); //
+				FileWriter fw = new FileWriter("tmp/output");
 
-				Object obj = parser.parse(arrayBF[i] + "}");
-				JSONObject jsonObject = (JSONObject) obj;
-				JSONObject jsonObject1 = new JSONObject();
+				for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
 
-				if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) {
+					Object obj = parser.parse(arrayBF[i] + "}");
+					JSONObject jsonObject = (JSONObject) obj;
+					JSONObject jsonObject1 = new JSONObject();
 
-				} else {
-					String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
-							String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
-							+ String.valueOf(jsonObject.get("G_IMG")).substring(0,
-									jsonObject.get("G_IMG").toString().length() - 4)
-							+ "_s.jpg";
-					File file2 = new File("/mnt/" + imagePath);
-					if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
+					if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) {
 
 					} else {
-						Date current = new Date();
-						// System.out.println(file2);
-						jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
-						jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
-						jsonObject1.put("HASH_IMG", String.valueOf(jsonObject.get("G_IMG")).substring(0,
-								jsonObject.get("G_IMG").toString().length() - 4) + "_s.jpg");
-						jsonObject1.put("IMG_HASH_V1", "tt");
-						// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-						// String Hash2 = String.valueOf(hash2);
-						// System.out.println(Hash2);
-						// fw.write(jsonObject1.toString()+"\r\n");
-						 System.out.println(jsonObject1);
-						
+						String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
+								String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
+								+ String.valueOf(jsonObject.get("G_IMG")).substring(0,
+										jsonObject.get("G_IMG").toString().length() - 4)
+								+ "_s.jpg";
+						File file2 = new File("/mnt/" + imagePath);
+						if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
+
+						} else {
+							Date current = new Date();
+							// System.out.println(file2);
+							jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
+							jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
+							jsonObject1.put("HASH_IMG", String.valueOf(jsonObject.get("G_IMG")).substring(0,
+									jsonObject.get("G_IMG").toString().length() - 4) + "_s.jpg");
+							jsonObject1.put("IMG_HASH_V1", "tt");
+							// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
+							// String Hash2 = String.valueOf(hash2);
+							// System.out.println(Hash2);
+							// fw.write(jsonObject1.toString()+"\r\n");
+							 System.out.println(jsonObject1);
+							
+						}
 					}
+
 				}
+				fw.close();
 
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			fw.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			
 		}
+
+
+
+	
 
 		// FigureN
 		// File file = new File("D:\\workspace2\\jphash\\airpods");
