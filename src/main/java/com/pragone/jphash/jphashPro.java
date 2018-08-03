@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -19,8 +21,14 @@ public class jphashPro {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 
+		System.out.println("inputPath: ");
+		Scanner scanner = new Scanner(System.in);
+		String inputPath = scanner.nextLine();
+		System.out.println("outputPath: ");
+		String outputPath = scanner.next();
+
 		try {
-			File file = new File("test.txt"); // 讀取測試檔
+			File file = new File(inputPath); // 讀取測試檔
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();
@@ -31,14 +39,14 @@ public class jphashPro {
 			}
 			fileReader.close();
 
-			String[] arrayBF = stringBuffer.toString().split("}");// 切割字串
+			String[] arrayBF = stringBuffer.toString().split("\n");// 切割字串
 			JSONParser parser = new JSONParser();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
-			FileWriter fw = new FileWriter("jpOutput");
+			FileWriter fw = new FileWriter(outputPath);
 
-			for (int i = 0; i < arrayBF.length - 1; i++) { // 拚imagePath
+			for (int i = 0; i < arrayBF.length; i++) { // 拚imagePath
 
-				Object obj = parser.parse(arrayBF[i] + "}");
+				Object obj = parser.parse(arrayBF[i]);
 				JSONObject jsonObject = (JSONObject) obj;
 				JSONObject jsonObject1 = new JSONObject();
 
@@ -70,8 +78,8 @@ public class jphashPro {
 						jsonObject1.put("IMG_HASH_V1", Hash2);
 						// System.out.println(Hash2);
 						fw.write(jsonObject1.toString() + "\r\n");
-						System.out.println(String.valueOf(file2)); //印出路徑
-						System.out.println(jsonObject1); //印出json
+						System.out.println(String.valueOf(file2)); // 印出路徑
+						System.out.println(jsonObject1); // 印出json
 
 					}
 				}
