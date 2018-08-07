@@ -53,12 +53,15 @@ public class jphashTest {
 				String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
 						String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
 						+ String.valueOf(jsonObject.get("G_IMG")).substring(0,
-								jsonObject.get("G_IMG").toString().length() - 4)
+								String.valueOf(jsonObject.get("G_IMG")).length() - 4)
 						+ "_s.jpg";
 				File file2 = new File("/mnt/" + imagePath);
 
-				if (!imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
+				if (imagePath.contains("null") || imagePath.contains(",") || imagePath.contains("gif")) {
 
+				} else {
+
+					System.out.println(imagePath);
 					Date current = new Date();
 					// System.out.println(file2);
 					jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
@@ -69,11 +72,9 @@ public class jphashTest {
 					// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
 					// String Hash2 = String.valueOf(hash2);
 					// System.out.println(Hash2);
-					fw.write(jsonObject1.toString() + "\r\n");
+					//fw.write(jsonObject1.toString() + "\r\n");
 					System.out.println(jsonObject1);
-
-				} else {
-
+					
 				}
 
 			} else {
