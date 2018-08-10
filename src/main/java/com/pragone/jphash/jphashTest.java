@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import org.apache.commons.math3.stat.descriptive.summary.Sum;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -50,34 +49,51 @@ public class jphashTest {
 			JSONObject jsonObject = (JSONObject) obj;
 			JSONObject jsonObject1 = new JSONObject();
 
-			if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) {
+			if (String.valueOf(jsonObject.get("G_IMG")).contains("(null)")) { // 過濾G_IMG為NULL
 
 			} else {
-				String[] G_IMGPath = String.valueOf(jsonObject.get("G_IMG")).split(",");
-
-				String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
-						String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE")))
-						+ G_IMGPath[0].substring(0, G_IMGPath[0].length() - 4) + "_s.jpg";
-				File file2 = new File("/mnt/" + imagePath);
-
-				if (imagePath.contains("null") || imagePath.contains("gif")) {
-
-				} else {
-
-					System.out.println(imagePath);
-					Date current = new Date();
-					// System.out.println(file2);
-					jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
-					jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
-					jsonObject1.put("HASH_IMG", G_IMGPath[0].substring(0, G_IMGPath[0].length() - 4) + "_s.jpg");
-					jsonObject1.put("IMG_HASH_V1", "tt");
-					// RadialHash hash2 = jpHash.getImageRadialHash("/mnt/" + imagePath);
-					// String Hash2 = String.valueOf(hash2);
-					// System.out.println(Hash2);
-					// fw.write(jsonObject1.toString() + "\r\n");
-					System.out.println(jsonObject1);
-
+				String[] G_IMGPath = String.valueOf(jsonObject.get("G_IMG")).split(","); // 如果有多個G_IMG取第一個
+				String G_IMGPath1 = G_IMGPath[0].toString(); // 第一個G_IMG
+				if (G_IMGPath1.contains(".")) { // 篩選副檔名
 					sum = sum + 1;
+					String[] G_IMGPath2 = G_IMGPath1.split("\\."); // 擷取副檔名
+					try {
+						String str = G_IMGPath2[1]; // 副檔名名稱
+						String imageName = G_IMGPath2[0]; // IMG name
+						switch (str) {
+						case "jpg":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "jpeg":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "JPG":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "JPEG":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "png":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "PNG":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						case "Jpg":
+							getFingerPrint(str, jsonObject, jsonObject1, imageName, sdf, fw);
+							break;
+
+						}
+					} catch (ArrayIndexOutOfBoundsException e) {
+						continue;
+					}
+
 				}
 
 			}
@@ -86,6 +102,33 @@ public class jphashTest {
 		System.out.println(sum);
 
 		fw.close();
+
+	}
+
+	static void getFingerPrint(String str, JSONObject jsonObject, JSONObject jsonObject1, String imageName,
+			SimpleDateFormat sdf, FileWriter fw) {
+		String imagePath = ImageUtility.getImgPath(String.valueOf(jsonObject.get("G_NO")),
+				String.valueOf(jsonObject.get("USER_NICK")), String.valueOf(jsonObject.get("G_STORAGE"))) + imageName
+				+ "_s." + str;
+
+		if (imagePath.contains("null")) {
+
+		} else {
+
+			System.out.println(imagePath);
+			Date current = new Date();
+			jsonObject1.put("G_NO", String.valueOf(jsonObject.get("G_NO")));
+			jsonObject1.put("_SOUTCE_TIME", sdf.format(current));
+			jsonObject1.put("HASH_IMG", imageName + "_s." + str);
+			jsonObject1.put("IMG_HASH_V1", "tt");
+			try {
+				fw.write(jsonObject1.toString() + "\r\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(jsonObject1);
+		}
 
 	}
 
